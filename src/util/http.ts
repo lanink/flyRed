@@ -12,7 +12,6 @@ const startLoading = () => {
 };
 
 const service = axios.create({
-    baseURL: 'https://api.apilyzy.com/api.php/provide/vod/',
     timeout: 5000,
     headers: { 'Content-Type': 'application/json;charset=UTF-8' }
 });
@@ -36,7 +35,7 @@ service.interceptors.response.use(
     response => {
         loading.close();
         if (response.status === 200) {
-            if (response.data.code != 1) {
+            if (response.data.code != 0 && response.data.code != 1 && response.data.status != 200) {
                 MessageBox.alert('出了点小问题，请联系管理员');
             } 
             return response.data;
@@ -52,7 +51,6 @@ service.interceptors.response.use(
 
 // 发送post请求
 export function P(url: string, params?: any) {
-
     return new Promise((resolve, reject) => {
         service.post(url, params)
             .then(res => {

@@ -3,21 +3,7 @@
     <el-container>
       <el-header>Header</el-header>
       <el-container>
-        <el-main class="container">
-          <router-link
-            class="block"
-            v-for="(item, i) in videoList"
-            :key="i"
-            :to="{ name: 'video', query: { id: item.id } }"
-          >
-            <el-image :src="item.pic" class="cover">
-              <div slot="placeholder" class="image-slot">
-                加载中<span class="dot">...</span>
-              </div>
-            </el-image>
-            <span>{{ item.name }}</span>
-          </router-link>
-        </el-main>
+        <el-main class="container"> </el-main>
       </el-container>
       <el-footer>Footer</el-footer>
     </el-container>
@@ -27,32 +13,30 @@
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
-import { video_list } from "../api/bjxkhc";
-import Detail from "./Detail.vue";
+import { video_detail } from "../api/bjxkhc";
 
-@Component({
-  components: {
-    Detail,
-  },
-})
+@Component({})
 export default class Home extends Vue {
-  videoList = [];
+  id: number;
 
-  mounted() {
-    this.getVideoList();
+  created() {
+    this.id = this.$route.query.id;
   }
 
-  getVideoList() {
+  mounted() {
+    console.log(this.id);
+    video_detail({id: this.id}).then(res => console.log(res));
+  }
+
+  getVideoDetail() {
     // TODO 提取分类
-    video_list({ page: 1, size: 20 }).then((res) => {
+    video_detail({ page: 1, size: 20 }).then((res) => {
       console.log(res);
-      this.videoList = (res as any).data;
     });
   }
 
-  getDetail(id: number) {
+  getDetail(id: Number) {
     console.log("go to video:", id);
-    this.$router.push("/video");
   }
 }
 </script>

@@ -6,12 +6,15 @@
   "author": "lanink",
   "license": "MIT",
   "scripts": {
+    "dev": "node ./proxy.js",
     "serve": "parcel public/index.html -p 8000 --open",
     "build": "rm -rf dist && parcel build public/index.html --no-source-maps"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "element-ui": "^2.14.0",
+    "parcel": "^2.0.0-beta.2",
+    "parcel-proxy-server": "^1.1.0",
     "vue": "^2.0.0",
     "vue-class-component": "^7.2.6",
     "vue-hot-reload-api": "^2.3.4",
